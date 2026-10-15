@@ -2,17 +2,30 @@
 
 ## Verify
 
-Run localization checks and all three suites before committing. CI uses macOS 15 with Xcode 26.0.1:
+Use change-scoped checks before committing. Stage only the intended changes, then run:
 
 ```sh
-python3 scripts/verify-localizations.py
-xcodebuild -project Mana.xcodeproj -scheme Mana -configuration Debug \
-  -destination 'platform=macOS,arch=arm64' test
-swift test --package-path Packages/ManaCore
-zsh scripts/verify-ios.sh
+python3 scripts/verify.py --staged
 ```
 
-The iOS script selects an installed iPhone simulator. Override it with `MANA_IOS_DESTINATION`; an iOS 18 or later runtime is required. It tests the app and builds the embedded widget extension with local ad-hoc signing. Simulator tests do not verify app/widget Keychain sharing on a signed device.
+The index selects paths; checks use working-tree contents. Do not select unrelated dirty files merely because they exist.
+Use explicit repository-relative paths during development, for example `python3 scripts/verify.py docs/index.html`.
+Use `--dry-run` to inspect the plan without running checks.
+
+- Website changes run static link, asset, fragment, and JavaScript syntax checks. Also inspect rendered desktop/mobile layouts when presentation changes. Do not launch Xcode for website-only work.
+- macOS changes run localization and macOS tests.
+- Shared-core changes also run core tests and iOS unit tests.
+- iOS runtime changes run localization and iOS unit tests. App/view/widget/project and translation changes also run behavioral UI tests. Add `--ui` for other user-visible iOS changes.
+- Screenshot capture is not part of the routine local UI loop. Run the capture workflow when changing App Store assets.
+- Verification tooling has simulator-free regression tests in `scripts/tests/`.
+- Unknown build/configuration changes select full verification. Documentation-only changes need review, not native test runs.
+
+Run `python3 scripts/verify.py --full` for release validation or cross-platform changes that need all suites.
+CI retains the complete native suites, including UI tests, on macOS 15 with Xcode 26.0.1.
+Do not rerun completed suites after an interruption; resume only unfinished tests when inputs are unchanged.
+
+`zsh scripts/verify-ios.sh --unit` runs iOS unit tests. `--ui` runs behavioral UI tests without App Store screenshot capture.
+Without an argument, the iOS script runs the full suite and selects an installed iPhone simulator. Override it with `MANA_IOS_DESTINATION`; an iOS 18 or later runtime is required. It tests the app and builds the embedded widget extension with local ad-hoc signing. Simulator tests do not verify app/widget Keychain sharing on a signed device.
 
 Both Xcode projects use synchronized groups; new Swift files in those groups do not need project-file entries.
 

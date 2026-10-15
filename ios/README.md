@@ -67,11 +67,17 @@ Usage becomes stale after 15 minutes or a failed fetch; failures retain the last
 
 ## Verify
 
+Use `python3 scripts/verify.py --staged` for change-scoped verification before committing.
+For focused iOS iteration:
+
 ```sh
-python3 scripts/verify-localizations.py
-swift test --package-path Packages/ManaCore
-zsh scripts/verify-ios.sh
+zsh scripts/verify-ios.sh --unit  # Unit tests; no UI automation
+zsh scripts/verify-ios.sh --ui    # Behavioral UI tests; no App Store screenshot capture
 ```
+
+Without an argument, `verify-ios.sh` runs the complete suite, as CI does.
+Use `python3 scripts/verify.py --full` for complete cross-platform verification.
+Do not rerun native suites for website-only changes.
 
 Choose another installed simulator with `MANA_IOS_DESTINATION`:
 
@@ -79,7 +85,7 @@ Choose another installed simulator with `MANA_IOS_DESTINATION`:
 MANA_IOS_DESTINATION='platform=iOS Simulator,name=iPhone 16,OS=18.3' zsh scripts/verify-ios.sh
 ```
 
-Keep the full macOS suite passing as documented in `AGENTS.md`.
+Keep the relevant suites passing as documented in `AGENTS.md`.
 UI tests use a Debug-only `--ui-testing` runtime with no accounts, credentials, cache, or provider requests.
 Turning Demo off in those tests cannot access accounts retained by a reused simulator.
 The standard-library-only generator reproduces the project, schemes, plists, entitlements, and brand assets:

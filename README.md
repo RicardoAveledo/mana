@@ -83,14 +83,28 @@ xcodebuild -project Mana.xcodeproj -scheme Mana -configuration Debug \
 
 The menu bar and CLI show remaining percentages. JSON includes `remainingPercent` and `usedPercent`. Codex and OpenCode Go show reset times; Antigravity does not. `--provider all` includes Antigravity only when enabled in Settings; `--provider antigravity` checks it directly. The default refresh interval is 60 seconds.
 
-Both apps use the portable provider package in `Packages/ManaCore/`. Also run the shared-core and iOS suites before committing:
+Both apps use the portable provider package in `Packages/ManaCore/`.
+Before committing, stage the intended changes and run only the relevant checks:
 
 ```sh
-swift test --package-path Packages/ManaCore
-zsh scripts/verify-ios.sh
+python3 scripts/verify.py --staged
 ```
 
-The iOS script requires an installed iPhone simulator with iOS 18 or later. See [iOS verification](ios/README.md#verify) for destination overrides.
+The index selects paths; checks validate working-tree contents. Unrelated unstaged paths do not expand the test plan.
+For an iteration before staging, supply paths, for example `python3 scripts/verify.py docs/index.html`.
+Add `--dry-run` to inspect the selected commands.
+Website-only changes do not launch Xcode. Inspect desktop/mobile rendering separately when changing layout or interactions.
+iOS runtime changes run unit tests; app/view/widget/project and translation changes also run behavioral UI tests.
+Add `--ui` when another change affects visible iOS behavior. Routine UI checks exclude App Store screenshot capture.
+
+For complete cross-platform verification, including screenshot UI tests:
+
+```sh
+python3 scripts/verify.py --full
+```
+
+CI retains the complete native suites. Local iOS checks require an installed iPhone simulator with iOS 18 or later.
+See [iOS verification](ios/README.md#verify) for focused commands and destination overrides.
 
 ## iPhone prototype
 
