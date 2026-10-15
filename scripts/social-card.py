@@ -39,11 +39,11 @@ PANEL_BORDER = (140, 179, 227)
 
 W, H = 1200, 630
 PAD = 76
-KICKER = "M A C   M E N U   B A R"
+KICKER = "M A C   +   i P H O N E"
 HEADLINE = "Save your mana."
-TAGLINE = "Track Codex, OpenCode Go, and Antigravity's Gemini usage in your Mac menu bar."
+TAGLINE = "Your AI usage, one glance away. On your Mac and now on iPhone."
 URL = "mana.salsaparapizza.com"
-FOOTER = "Free and open source · macOS 13 or later"
+FOOTER = "Free and open source · macOS 13+ · iOS 18+"
 
 # Popover bounding box inside mana-app-preview.jpg (1280x640), measured from
 # the panel's luminance edges plus a small margin for corners and shadow.

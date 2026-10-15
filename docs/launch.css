@@ -1,8 +1,15 @@
-/* Launch preview and information pages use the existing Mana palette. */
-.iphone-preview { border-top: 1px solid #ffffff15; display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: center; }
+/* App Store launch and information pages use the existing Mana palette. */
+.app-store-link { display: inline-flex; flex: 0 0 auto; border-radius: 7px; vertical-align: middle; }
+.app-store-link img { display: block; width: auto; height: 50px; }
+.hero-actions { align-items: center; gap: 20px; }
+.iphone-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 28px; }
+.iphone-availability { color: #a9b9cc; font-size: 13px; }
+.iphone-copy p.iphone-note { max-width: 420px; font-size: 13px; }
+.closing > .button { vertical-align: middle; }
+.closing-app-store { margin: 12px 0 12px 20px; }
+.iphone-section { border-top: 1px solid #ffffff15; display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: center; }
 .iphone-copy h2, .info-page h1 { font-size: clamp(36px, 4vw, 54px); letter-spacing: -0.055em; line-height: 1.12; margin: 12px 0 24px; }
 .iphone-copy p:not(.kicker):not(.lede), .info-page p, .info-page li { color: #a9b9cc; line-height: 1.7; }
-.iphone-copy .preview-status { border-left: 2px solid #67d9f5; padding-left: 16px; }
 .iphone-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
 .iphone-gallery figure { margin: 0; }
 .iphone-gallery img { display: block; width: 100%; height: auto; border: 1px solid #8cb3e333; border-radius: 24px; }
@@ -16,6 +23,6 @@
 .info-page li { margin-bottom: 10px; }
 .footer-inner > span:last-child { flex-wrap: wrap; }
 .hero-copy, .hero-art { min-width: 0; }
-@media (max-width: 800px) { .iphone-preview { grid-template-columns: 1fr; gap: 32px; } .iphone-gallery { max-width: 520px; margin: auto; } }
+@media (max-width: 800px) { .iphone-section { grid-template-columns: 1fr; gap: 32px; } .iphone-gallery { max-width: 520px; margin: auto; } }
 @media (max-width: 360px) { .header-inner { flex-wrap: wrap; gap: 14px; padding-top: 16px; padding-bottom: 16px; } .site-header nav { width: 100%; justify-content: space-between; } }
-@media (max-width: 560px) { .iphone-gallery { gap: 12px; } .iphone-gallery img { border-radius: 16px; } .info-page { padding-top: 40px; } }
+@media (max-width: 560px) { .closing-app-store { margin: 20px 12px 0; } .iphone-gallery { gap: 12px; } .iphone-gallery img { border-radius: 16px; } .info-page { padding-top: 40px; } }
