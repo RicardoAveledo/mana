@@ -51,7 +51,7 @@ struct UsagePopoverView: View {
             }
             .padding(.bottom, 14)
 
-            if settings.visibleProviders.isEmpty {
+            if settings.visibleProviders.isEmpty && !settings.claudeUsagePinned {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("No providers configured")
                         .font(.subheadline.weight(.semibold))
@@ -72,6 +72,12 @@ struct UsagePopoverView: View {
                     if index < settings.visibleProviders.count - 1 {
                         Divider().padding(.vertical, 12)
                     }
+                }
+                if settings.claudeUsagePinned {
+                    if !settings.visibleProviders.isEmpty {
+                        Divider().padding(.vertical, 12)
+                    }
+                    claudeUsageSection
                 }
             }
 
@@ -108,6 +114,31 @@ struct UsagePopoverView: View {
             if let modifierMonitor { NSEvent.removeMonitor(modifierMonitor) }
             modifierMonitor = nil
             optionPressed = false
+        }
+    }
+
+    private var claudeUsageSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                Image("Provider-claude")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 17, height: 17)
+                    .frame(width: 18)
+                Text("CLAUDE")
+                    .font(.caption.weight(.semibold))
+                    .tracking(0.5)
+                Spacer()
+                Button {
+                    dismiss()
+                    NSWorkspace.shared.open(URL(string: "https://claude.ai/settings/usage")!)
+                } label: {
+                    Label("Check usage", systemImage: "arrow.up.right.square")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.tint)
+            }
         }
     }
 
