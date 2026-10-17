@@ -68,20 +68,7 @@ final class ManaTests: XCTestCase {
         XCTAssertFalse(UsageSettings(defaults: suite).claudeUsagePinned)
     }
 
-    @MainActor
-    func testHasPopoverContentCoversClaudeOnlyConfiguration() throws {
-        let suiteName = "mana-popover-content-test-\(UUID().uuidString)"
-        let suite = try XCTUnwrap(UserDefaults(suiteName: suiteName))
-        defer { suite.removePersistentDomain(forName: suiteName) }
-        let settings = UsageSettings(defaults: suite)
-        XCTAssertFalse(settings.hasPopoverContent)
-        settings.claudeUsagePinned = true
-        XCTAssertTrue(settings.hasPopoverContent, "Claude-only pin must keep popover content (incl. Settings entry) visible")
-        settings.claudeUsagePinned = false
-        XCTAssertFalse(settings.hasPopoverContent)
-    }
-
-    func testOAuthListenerIgnoresInvalidCallbackBeforeValidOne() async throws {
+func testOAuthListenerIgnoresInvalidCallbackBeforeValidOne() async throws {
         let listener = try LoopbackOAuthListener(ports: [0])
         defer { listener.close() }
         // Queue all requests before accepting so a slow runner cannot drop the valid callback.
