@@ -38,6 +38,10 @@ final class UsageSettings: ObservableObject {
         ProviderID.allCases.filter(configuredProviders.contains)
     }
 
+    var hasPopoverContent: Bool {
+        !visibleProviders.isEmpty || claudeUsagePinned
+    }
+
     static let refreshIntervalKey = "refreshIntervalSeconds"
     private let defaults: UserDefaults
 

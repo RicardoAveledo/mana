@@ -51,7 +51,7 @@ struct UsagePopoverView: View {
             }
             .padding(.bottom, 14)
 
-            if settings.visibleProviders.isEmpty && !settings.claudeUsagePinned {
+            if !settings.hasPopoverContent {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("No providers configured")
                         .font(.subheadline.weight(.semibold))
@@ -83,7 +83,7 @@ struct UsagePopoverView: View {
 
             Divider().padding(.top, 12).padding(.bottom, 8)
             HStack(spacing: 14) {
-                if !settings.visibleProviders.isEmpty {
+                if settings.hasPopoverContent {
                     Button {
                         dismiss()
                         openSettings()
